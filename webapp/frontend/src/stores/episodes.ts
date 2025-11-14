@@ -142,7 +142,7 @@ export const useEpisodesStore = defineStore('episodes', () => {
     if (availableEpisodes.length === 0) return null
 
     const randomIndex = Math.floor(Math.random() * availableEpisodes.length)
-    return availableEpisodes[randomIndex]
+    return availableEpisodes[randomIndex] || null
   }
 
   return {

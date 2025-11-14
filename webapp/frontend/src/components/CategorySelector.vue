@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Category, type CategoryConfig } from '@/types'
+import type { Category, CategoryConfig } from '@/types'
 import { useSettingsStore } from '@/stores/settings'
 
 const emit = defineEmits<{
@@ -8,50 +8,50 @@ const emit = defineEmits<{
 }>()
 
 const settingsStore = useSettingsStore()
-const selectedCategory = ref<Category>(Category.All)
+const selectedCategory = ref<Category>('all')
 
 const categories = computed<CategoryConfig[]>(() => [
   {
-    id: Category.Range1_50,
+    id: '1-50',
     label: 'Folgen 1-50',
     type: 'ddf',
     range: { min: 1, max: 50 }
   },
   {
-    id: Category.Range1_100,
+    id: '1-100',
     label: 'Folgen 1-100',
     type: 'ddf',
     range: { min: 1, max: 100 }
   },
   {
-    id: Category.Range1_150,
+    id: '1-150',
     label: 'Folgen 1-150',
     type: 'ddf',
     range: { min: 1, max: 150 }
   },
   {
-    id: Category.All,
+    id: 'all',
     label: 'Alle Folgen',
     type: 'ddf'
   },
   {
-    id: Category.Custom,
+    id: 'custom',
     label: `Eigener Bereich (${settingsStore.customRangeDDF.min}-${settingsStore.customRangeDDF.max})`,
     type: 'ddf',
     range: settingsStore.customRangeDDF
   },
   {
-    id: Category.DieDrei,
+    id: 'diedrei',
     label: 'Die Dr3i',
     type: 'diedrei'
   },
   {
-    id: Category.Kids,
+    id: 'kids',
     label: 'Die drei ??? Kids',
     type: 'kids'
   },
   {
-    id: Category.Hoerbuch,
+    id: 'hoerbuch',
     label: 'Hörbücher',
     type: 'hoerbuch'
   }
@@ -65,13 +65,19 @@ const selectCategory = (category: Category) => {
 const previousCategory = () => {
   const currentIndex = categories.value.findIndex(c => c.id === selectedCategory.value)
   const newIndex = currentIndex > 0 ? currentIndex - 1 : categories.value.length - 1
-  selectCategory(categories.value[newIndex].id)
+  const newCategory = categories.value[newIndex]
+  if (newCategory) {
+    selectCategory(newCategory.id)
+  }
 }
 
 const nextCategory = () => {
   const currentIndex = categories.value.findIndex(c => c.id === selectedCategory.value)
   const newIndex = currentIndex < categories.value.length - 1 ? currentIndex + 1 : 0
-  selectCategory(categories.value[newIndex].id)
+  const newCategory = categories.value[newIndex]
+  if (newCategory) {
+    selectCategory(newCategory.id)
+  }
 }
 
 const currentCategoryLabel = computed(() => {

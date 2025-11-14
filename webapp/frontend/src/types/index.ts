@@ -1,18 +1,12 @@
 // Episode Types
+export type EpisodeType = 'ddf' | 'diedrei' | 'kids' | 'sonderfolge' | 'hoerbuch'
+
 export interface Episode {
   name: string
   beschreibung: string
   spotify: string
   nummer: string
   type: EpisodeType
-}
-
-export enum EpisodeType {
-  DDF = 'ddf',           // Die drei ???
-  DieDrei = 'diedrei',   // Die Dr3i
-  Kids = 'kids',         // Die drei ??? Kids
-  Sonderfolge = 'sonderfolge',
-  Hoerbuch = 'hoerbuch'
 }
 
 export interface EpisodeResponse {
@@ -49,6 +43,8 @@ export interface FilteredEpisode {
 }
 
 // Settings Types
+export type Theme = 'bob' | 'peter' | 'justus'
+
 export interface UserSettings {
   theme: Theme
   onlineMode: boolean
@@ -66,23 +62,8 @@ export interface UserSettings {
   }
 }
 
-export enum Theme {
-  Bob = 'bob',
-  Peter = 'peter',
-  Justus = 'justus'
-}
-
 // Category Types
-export enum Category {
-  Range1_50 = '1-50',
-  Range1_100 = '1-100',
-  Range1_150 = '1-150',
-  All = 'all',
-  DieDrei = 'diedrei',
-  Kids = 'kids',
-  Hoerbuch = 'hoerbuch',
-  Custom = 'custom'
-}
+export type Category = '1-50' | '1-100' | '1-150' | 'all' | 'diedrei' | 'kids' | 'hoerbuch' | 'custom'
 
 export interface CategoryConfig {
   id: Category

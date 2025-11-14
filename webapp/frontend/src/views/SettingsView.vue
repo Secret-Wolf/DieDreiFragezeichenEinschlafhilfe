@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
-import { Theme } from '@/types'
+import type { Theme } from '@/types'
 
 const settingsStore = useSettingsStore()
 
-const localTheme = ref(settingsStore.theme)
+const localTheme = ref<Theme>(settingsStore.theme)
 const localOnlineMode = ref(settingsStore.onlineMode)
 const localRangeDDF = ref({ ...settingsStore.customRangeDDF })
 const localRangeDieDrei = ref({ ...settingsStore.customRangeDieDrei })
@@ -52,10 +52,10 @@ const saveSettings = async () => {
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
-              @click="localTheme = Theme.Bob"
+              @click="localTheme = 'bob'"
               :class="[
                 'p-4 rounded-lg border-2 transition-all',
-                localTheme === Theme.Bob
+                localTheme === 'bob'
                   ? 'border-bob bg-bob/10'
                   : 'border-gray-200 hover:border-bob/50'
               ]"
@@ -66,10 +66,10 @@ const saveSettings = async () => {
             </button>
 
             <button
-              @click="localTheme = Theme.Peter"
+              @click="localTheme = 'peter'"
               :class="[
                 'p-4 rounded-lg border-2 transition-all',
-                localTheme === Theme.Peter
+                localTheme === 'peter'
                   ? 'border-peter bg-peter/10'
                   : 'border-gray-200 hover:border-peter/50'
               ]"
@@ -80,10 +80,10 @@ const saveSettings = async () => {
             </button>
 
             <button
-              @click="localTheme = Theme.Justus"
+              @click="localTheme = 'justus'"
               :class="[
                 'p-4 rounded-lg border-2 transition-all',
-                localTheme === Theme.Justus
+                localTheme === 'justus'
                   ? 'border-justus bg-justus/10'
                   : 'border-gray-200 hover:border-justus/50'
               ]"

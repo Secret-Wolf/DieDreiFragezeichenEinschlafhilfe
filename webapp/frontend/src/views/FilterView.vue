@@ -32,17 +32,6 @@ const getEpisodeName = (nummer: string, type: EpisodeType) => {
   return episode?.name || `Folge ${nummer}`
 }
 
-const getTypeLabel = (type: EpisodeType) => {
-  const labels: Record<EpisodeType, string> = {
-    'ddf': 'Die drei ???',
-    'diedrei': 'Die Dr3i',
-    'kids': 'Die drei ??? Kids',
-    'sonderfolge': 'Sonderfolge',
-    'hoerbuch': 'Hörbuch'
-  }
-  return labels[type] || type
-}
-
 const groupedFilters = computed(() => {
   const groups: Record<EpisodeType, typeof settingsStore.filteredEpisodes> = {
     'ddf': [],
