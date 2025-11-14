@@ -60,7 +60,9 @@ const openSpotify = () => {
 
 const openRockyBeach = () => {
   if (props.episode) {
-    window.open(`https://www.rocky-beach.com/hoerspiel/${props.episode.nummer}.html`, '_blank')
+    // Format episode number with leading zeros (e.g., 75 -> 075)
+    const paddedNumber = props.episode.nummer.padStart(3, '0')
+    window.open(`https://www.rocky-beach.com/hoerspiel/folgen/${paddedNumber}.html`, '_blank')
   }
 }
 </script>

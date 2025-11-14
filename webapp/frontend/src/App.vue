@@ -11,13 +11,11 @@ onMounted(async () => {
   // Try to fetch user if token exists
   await authStore.fetchUser()
 
-  // Load settings
+  // Load settings (works offline and online)
   await settingsStore.loadSettings()
 
-  // Load filtered episodes if authenticated
-  if (authStore.isAuthenticated) {
-    await settingsStore.loadFilteredEpisodes()
-  }
+  // Load filtered episodes (works offline and online)
+  await settingsStore.loadFilteredEpisodes()
 })
 </script>
 
