@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: ddf-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ddf_user
+      POSTGRES_PASSWORD: ddf_password_change_in_production
+      POSTGRES_DB: ddf_einschlafhilfe
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ddf-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ddf_user -d ddf_einschlafhilfe"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ddf-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://ddf_user:ddf_password_change_in_production@postgres:5432/ddf_einschlafhilfe?schema=public
+      JWT_SECRET: super-secret-jwt-key-change-this-in-production
+      PORT: 3000
+      NODE_ENV: production
+      CORS_ORIGIN: http://localhost
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ddf-network
+    command: sh -c "npx prisma migrate deploy && npm start"
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ddf-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - ddf-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  ddf-network:
+    driver: bridge
