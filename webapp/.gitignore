@@ -34,9 +34,6 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Prisma
-backend/prisma/migrations/
-
 # Docker
 .docker/
 
